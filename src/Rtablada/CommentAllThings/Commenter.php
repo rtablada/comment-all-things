@@ -1,16 +1,40 @@
 <?php namespace Rtablada\CommentAllThings;
 
-use Illuminate\Support\Facades\Facade;
-
-class Commenter extends Facade
+class Commenter
 {
 	/**
-	 * Get the registered name of the component.
+	 * Create a new Evironment
 	 *
-	 * @return string
+	 * @param \Illuminate\View\Environment $view
+	 * @return void
 	 */
-	protected static function getFacadeAccessor()
+	public function __construct(Environment $env, $commentable)
 	{
-		return 'commenter';
+		$this->env = $env;
+		$this->setComments($commentable);
+	}
+
+	public function setComments($commentable)
+	{
+		if ($commentable instanceof Rtablada\CommentAllThings\CommentCollection) {
+			$this->comments = $commentable;
+		} else {
+			$this->comments = $commentable->comments;
+		}
+	}
+
+	public function render($view = null)
+	{
+		return $this->env->getCommentsView($this, $view);
+	}
+
+	public function getComments()
+	{
+		return $this->comments;
+	}
+
+	public function hasComments()
+	{
+		return count($this->comments);
 	}
 }

@@ -9,7 +9,12 @@ class CommentAllThingsServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
+
+	public function boot()
+	{
+		$this->package('rtablada/comment-all-things', 'comment-all-things');
+	}
 
 	/**
 	 * Register the service provider.
@@ -18,8 +23,11 @@ class CommentAllThingsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->share('commenter', function($app) {
-			$presenter = new CommentPresenter($app['view']);
+		$this->app->bindShared('commenter', function($app) {
+			$presenter = new Environment($app['view']);
+			$presenter->setViewName($app['config']['comment-all-things::view']);
+
+			return $presenter;
 		});
 	}
 
