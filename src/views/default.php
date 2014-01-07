@@ -4,6 +4,8 @@
 
 <?php if ($commenter->hasComments()): ?>
 	<ul class="comments">
-		<?php echo $presenter->render() ?>
+		<?php echo $presenter->renderComments() ?>
 	</ul>
 <?php endif ?>
+
+<?php echo $presenter->renderCommentForm() ?>

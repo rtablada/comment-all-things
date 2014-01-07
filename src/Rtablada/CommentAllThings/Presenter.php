@@ -26,7 +26,9 @@ abstract class Presenter {
 	 *
 	 * @return string
 	 */
-	public abstract function render();
+	public abstract function renderComments();
+
+	public abstract function renderCommentForm();
 
 	/**
 	 * Get image for Gravatar
