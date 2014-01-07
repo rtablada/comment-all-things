@@ -14,7 +14,8 @@ class CreateCommentsTable extends Migration {
 		Schema::create('comments', function($table) {
 			$table->increments('id');
 			$table->string('email');
-			$table->string('contents');
+			$table->text('contents');
+			$table->string('display_name');
 			$table->integer('commentable_id');
 			$table->string('commentable_type');
 			$table->timestamps();
